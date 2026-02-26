@@ -134,9 +134,22 @@ function initHighlightMarkerTextReveal() {
   });
 }
 
+// Wait for GSAP, ScrollTrigger and SplitText to be available
+function waitForGSAP(callback) {
+  if (
+    typeof gsap !== "undefined" &&
+    typeof ScrollTrigger !== "undefined" &&
+    typeof SplitText !== "undefined"
+  ) {
+    callback();
+  } else {
+    setTimeout(() => waitForGSAP(callback), 50);
+  }
+}
+
 // Initialize Highlight Marker Text Reveal
 document.addEventListener("DOMContentLoaded", () => {
   document.fonts.ready.then(() => {
-    initHighlightMarkerTextReveal();
+    waitForGSAP(initHighlightMarkerTextReveal);
   });
 });
